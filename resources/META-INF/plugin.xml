@@ -23,8 +23,4 @@
 			<implementation-class>org.editorconfig.plugincomponents.ConfigProjectComponent</implementation-class>
 		</component>
 	</project-components>
-
-	<extensions defaultExtensionNs="com.intellij">
-		<errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
-	</extensions>
 </idea-plugin>
