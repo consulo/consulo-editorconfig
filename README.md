@@ -1,1 +1,1 @@
-![Build Status](http://must-be.org/vulcan/statusImage?name=consulo-editorconfig)
+[![Build Status](https://ci.consulo.io/job/consulo-editorconfig/badge/icon)](https://ci.consulo.io/job/consulo-editorconfig/)
