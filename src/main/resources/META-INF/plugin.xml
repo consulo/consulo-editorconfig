@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
 	<id>org.editorconfigs</id>
 	<name>EditorConfig</name>
 	<version>SNAPSHOT</version>
