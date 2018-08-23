@@ -10,17 +10,9 @@
 		<generalCodeStyleOptionsProvider instance="org.editorconfig.settings.EditorConfigConfigurable"/>
 		<codeStyleSettingsProvider implementation="org.editorconfig.settings.EditorConfigConfigurable"/>
 		<fileIndentOptionsProvider implementation="org.editorconfig.configmanagement.EditorConfigIndentOptionsProvider"/>
+
+		<applicationService serviceImplementation="org.editorconfig.plugincomponents.SettingsProviderComponent"/>
+
+		<projectService serviceImplementation="org.editorconfig.plugincomponents.ConfigProjectComponent" lazy="false" />
 	</extensions>
-
-	<application-components>
-		<component>
-			<implementation-class>org.editorconfig.plugincomponents.SettingsProviderComponent</implementation-class>
-		</component>
-	</application-components>
-
-	<project-components>
-		<component>
-			<implementation-class>org.editorconfig.plugincomponents.ConfigProjectComponent</implementation-class>
-		</component>
-	</project-components>
 </idea-plugin>
