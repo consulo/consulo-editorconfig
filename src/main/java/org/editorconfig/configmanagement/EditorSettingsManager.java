@@ -1,23 +1,23 @@
 package org.editorconfig.configmanagement;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.editorconfig.Utils;
-import org.editorconfig.core.EditorConfig;
-import org.editorconfig.plugincomponents.SettingsProviderComponent;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.ex.EditorSettingsExternalizable;
 import com.intellij.openapi.editor.impl.TrailingSpacesStripper;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileDocumentManagerAdapter;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
+import consulo.util.dataholder.Key;
+import org.editorconfig.Utils;
+import org.editorconfig.core.EditorConfig;
+import org.editorconfig.plugincomponents.SettingsProviderComponent;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EditorSettingsManager extends FileDocumentManagerAdapter {
   // Handles the following EditorConfig settings:
@@ -73,7 +73,7 @@ public class EditorSettingsManager extends FileDocumentManagerAdapter {
   }
 
   private <T> void applyConfigValueToUserData(VirtualFile file, Key<T> userDataKey, String editorConfigKey,
-                                              String configValue, Map<String, T> configMap) {
+											  String configValue, Map<String, T> configMap) {
     if (configValue.isEmpty()) {
       file.putUserData(userDataKey, null);
     }

@@ -1,4 +1,4 @@
-<idea-plugin>
+<consulo-plugin>
 	<id>org.editorconfigs</id>
 	<name>EditorConfig</name>
 	<version>SNAPSHOT</version>
@@ -15,4 +15,4 @@
 
 		<projectService serviceImplementation="org.editorconfig.plugincomponents.ConfigProjectComponent" lazy="false" />
 	</extensions>
-</idea-plugin>
+</consulo-plugin>
