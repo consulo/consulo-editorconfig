@@ -1,6 +1,6 @@
 package org.editorconfig.plugincomponents;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 import org.editorconfig.configmanagement.EditorSettingsManager;
 import org.editorconfig.configmanagement.EncodingManager;

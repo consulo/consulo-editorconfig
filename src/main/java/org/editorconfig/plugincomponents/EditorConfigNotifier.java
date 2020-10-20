@@ -6,10 +6,12 @@ import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
+import jakarta.inject.Singleton;
 
 /**
  * @author Dennis.Ushakov
  */
+@Singleton
 public class EditorConfigNotifier {
   public static final String LAST_NOTIFICATION_STATUS = "editorconfig.notification";
 

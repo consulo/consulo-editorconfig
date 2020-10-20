@@ -1,16 +1,15 @@
 package org.editorconfig.plugincomponents;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Singleton;
-
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
+import jakarta.inject.Singleton;
 import org.editorconfig.Utils;
 import org.editorconfig.core.EditorConfig;
 import org.editorconfig.core.EditorConfig.OutPair;
 import org.editorconfig.core.EditorConfigException;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 public class SettingsProviderComponent
