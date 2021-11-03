@@ -3,6 +3,9 @@
 	<name>EditorConfig</name>
 	<version>SNAPSHOT</version>
 	<vendor url="http://editorconfig.org">Kevin Bell, JetBrains</vendor>
+	<tags>
+		<tag>editor.extension</tag>
+	</tags>
 
 	<extensions defaultExtensionNs="com.intellij">
 		<applicationService serviceInterface="org.editorconfig.plugincomponents.EditorConfigNotifier"
