@@ -1,36 +1,50 @@
 package org.editorconfig.plugincomponents;
 
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.editor.config.EditorConfigNotification;
+import consulo.ide.ServiceManager;
+import consulo.project.Project;
+import consulo.project.ProjectPropertiesComponent;
+import consulo.project.ui.notification.NotificationType;
 import jakarta.inject.Singleton;
 
 /**
  * @author Dennis.Ushakov
  */
 @Singleton
-public class EditorConfigNotifier {
-  public static final String LAST_NOTIFICATION_STATUS = "editorconfig.notification";
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
+public class EditorConfigNotifier
+{
+	public static final String LAST_NOTIFICATION_STATUS = "editorconfig.notification";
 
-  public static EditorConfigNotifier getInstance() {
-    return ServiceManager.getService(EditorConfigNotifier.class);
-  }
+	public static EditorConfigNotifier getInstance()
+	{
+		return ServiceManager.getService(EditorConfigNotifier.class);
+	}
 
-  public void error(Project project, String id, String message) {
-    doNotify(project, id, message, NotificationType.ERROR);
-  }
+	public void error(Project project, String id, String message)
+	{
+		doNotify(project, id, message, NotificationType.ERROR);
+	}
 
-  protected void doNotify(Project project, String id, String message, final NotificationType type) {
-    final String value = PropertiesComponent.getInstance(project).getValue("editorconfig.notification");
-    if (id.equals(value)) return;
-    Notifications.Bus.notify(new Notification("editorconfig", "EditorConfig", message, type), project);
-    PropertiesComponent.getInstance(project).setValue(LAST_NOTIFICATION_STATUS, id);
-  }
+	protected void doNotify(Project project, String id, String message, final NotificationType type)
+	{
+		final String value = ProjectPropertiesComponent.getInstance(project).getValue("editorconfig.notification");
+		if(id.equals(value))
+		{
+			return;
+		}
 
-  public void info(Project project, String message) {
-    doNotify(project, message, message, NotificationType.INFORMATION);
-  }
+		EditorConfigNotification.GROUP.createNotification(message, type).notify(project);
+
+		ProjectPropertiesComponent.getInstance(project).setValue(LAST_NOTIFICATION_STATUS, id);
+	}
+
+	public void info(Project project, String message)
+	{
+		doNotify(project, message, message, NotificationType.INFORMATION);
+	}
 }

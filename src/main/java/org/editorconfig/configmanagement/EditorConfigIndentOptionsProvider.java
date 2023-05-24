@@ -1,12 +1,13 @@
 package org.editorconfig.configmanagement;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.intellij.psi.codeStyle.FileIndentOptionsProvider;
-import org.editorconfig.Utils;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CommonCodeStyleSettings;
+import consulo.language.codeStyle.FileIndentOptionsProvider;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
+import org.editorconfig.util.Utils;
 import org.editorconfig.core.EditorConfig;
 import org.editorconfig.plugincomponents.SettingsProviderComponent;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * @author Dennis.Ushakov
  */
+@ExtensionImpl
 public class EditorConfigIndentOptionsProvider extends FileIndentOptionsProvider {
   // Handles the following EditorConfig settings:
   private static final String indentSizeKey = "indent_size";

@@ -6,16 +6,4 @@
 	<tags>
 		<tag>editor.extension</tag>
 	</tags>
-
-	<extensions defaultExtensionNs="com.intellij">
-		<applicationService serviceInterface="org.editorconfig.plugincomponents.EditorConfigNotifier"
-							serviceImplementation="org.editorconfig.plugincomponents.EditorConfigNotifier"/>
-		<generalCodeStyleOptionsProvider instance="org.editorconfig.settings.EditorConfigConfigurable"/>
-		<codeStyleSettingsProvider implementation="org.editorconfig.settings.EditorConfigConfigurable"/>
-		<fileIndentOptionsProvider implementation="org.editorconfig.configmanagement.EditorConfigIndentOptionsProvider"/>
-
-		<applicationService serviceImplementation="org.editorconfig.plugincomponents.SettingsProviderComponent"/>
-
-		<projectService serviceImplementation="org.editorconfig.plugincomponents.ConfigProjectComponent" lazy="false" />
-	</extensions>
 </consulo-plugin>

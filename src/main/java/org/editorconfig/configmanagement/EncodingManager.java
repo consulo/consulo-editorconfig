@@ -1,14 +1,14 @@
 package org.editorconfig.configmanagement;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileDocumentManagerAdapter;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.encoding.EncodingProjectManager;
-import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
-import org.editorconfig.Utils;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.document.event.FileDocumentManagerAdapter;
+import consulo.language.codeStyle.CodeStyleSettingsManager;
+import consulo.project.Project;
+import consulo.util.lang.Comparing;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.encoding.EncodingProjectManager;
+import org.editorconfig.util.Utils;
 import org.editorconfig.core.EditorConfig.OutPair;
 import org.editorconfig.plugincomponents.SettingsProviderComponent;
 import org.jetbrains.annotations.NotNull;

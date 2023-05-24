@@ -1,24 +1,31 @@
 package org.editorconfig.plugincomponents;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.EditorEx;
+import consulo.codeEditor.EditorFactory;
+import consulo.component.messagebus.MessageBus;
+import consulo.disposer.Disposable;
+import consulo.document.event.FileDocumentManagerListener;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFileManager;
+import consulo.virtualFileSystem.event.VirtualFileEvent;
+import consulo.virtualFileSystem.event.VirtualFileListener;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-
 import org.editorconfig.configmanagement.EditorSettingsManager;
 import org.editorconfig.configmanagement.EncodingManager;
 import org.editorconfig.configmanagement.LineEndingsManager;
 import org.jetbrains.annotations.NotNull;
-import com.intellij.AppTopics;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorFactory;
-import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFileEvent;
-import com.intellij.openapi.vfs.VirtualFileListener;
-import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.util.messages.MessageBus;
 
 @Singleton
-public class ConfigProjectComponent
+@ServiceAPI(value = ComponentScope.PROJECT, lazy = false)
+@ServiceImpl
+public class ConfigProjectComponent implements Disposable
 {
+	@Inject
 	public ConfigProjectComponent(final Project project, final EditorFactory editorFactory, VirtualFileManager virtualFileManager)
 	{
 		// Register project-level config managers
@@ -26,9 +33,9 @@ public class ConfigProjectComponent
 		EditorSettingsManager editorSettingsManager = new EditorSettingsManager(project);
 		EncodingManager encodingManager = new EncodingManager(project);
 		LineEndingsManager lineEndingsManager = new LineEndingsManager(project);
-		bus.connect().subscribe(AppTopics.FILE_DOCUMENT_SYNC, encodingManager);
-		bus.connect().subscribe(AppTopics.FILE_DOCUMENT_SYNC, editorSettingsManager);
-		bus.connect().subscribe(AppTopics.FILE_DOCUMENT_SYNC, lineEndingsManager);
+		bus.connect().subscribe(FileDocumentManagerListener.class, encodingManager);
+		bus.connect().subscribe(FileDocumentManagerListener.class, editorSettingsManager);
+		bus.connect().subscribe(FileDocumentManagerListener.class, lineEndingsManager);
 		virtualFileManager.addVirtualFileListener(new VirtualFileListener()
 		{
 			@Override
@@ -59,6 +66,12 @@ public class ConfigProjectComponent
 					}
 				}
 			}
-		}, project);
+		}, this);
+	}
+
+	@Override
+	public void dispose()
+	{
+
 	}
 }

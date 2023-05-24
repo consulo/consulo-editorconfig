@@ -1,24 +1,24 @@
 package org.editorconfig.configmanagement;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileDocumentManagerAdapter;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.wm.IdeFrame;
-import com.intellij.openapi.wm.StatusBar;
-import com.intellij.openapi.wm.StatusBarWidget;
-import com.intellij.openapi.wm.WindowManager;
-import com.intellij.openapi.wm.impl.status.LineSeparatorPanel;
-import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
-import com.intellij.util.LineSeparator;
-import org.editorconfig.Utils;
+import consulo.application.ApplicationManager;
+import consulo.document.Document;
+import consulo.document.FileDocumentManager;
+import consulo.document.event.FileDocumentManagerAdapter;
+import consulo.fileEditor.FileEditorManager;
+import consulo.fileEditor.event.FileEditorManagerEvent;
+import consulo.fileEditor.event.FileEditorManagerListener;
+import consulo.language.codeStyle.CodeStyleSettingsManager;
+import consulo.platform.LineSeparator;
+import consulo.project.Project;
+import consulo.project.ui.wm.IdeFrame;
+import consulo.project.ui.wm.StatusBar;
+import consulo.project.ui.wm.StatusBarWidget;
+import consulo.project.ui.wm.WindowManager;
+import consulo.util.lang.StringUtil;
+import consulo.virtualFileSystem.VirtualFile;
 import org.editorconfig.core.EditorConfig;
 import org.editorconfig.plugincomponents.SettingsProviderComponent;
+import org.editorconfig.util.Utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -51,10 +51,10 @@ public class LineEndingsManager extends FileDocumentManagerAdapter {
         StatusBar statusBar = frame.getStatusBar();
         StatusBarWidget widget = statusBar != null ? statusBar.getWidget("LineSeparator") : null;
 
-        if (widget instanceof LineSeparatorPanel) {
+        if (widget instanceof FileEditorManagerListener) {
           FileEditorManagerEvent event = new FileEditorManagerEvent(FileEditorManager.getInstance(myProject),
                                                                     null, null, null, null);
-          ((LineSeparatorPanel)widget).selectionChanged(event);
+          ((FileEditorManagerListener)widget).selectionChanged(event);
         }
       }
     });

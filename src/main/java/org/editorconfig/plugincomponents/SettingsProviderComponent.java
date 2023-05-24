@@ -1,9 +1,12 @@
 package org.editorconfig.plugincomponents;
 
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.project.Project;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.ide.ServiceManager;
+import consulo.project.Project;
 import jakarta.inject.Singleton;
-import org.editorconfig.Utils;
+import org.editorconfig.util.Utils;
 import org.editorconfig.core.EditorConfig;
 import org.editorconfig.core.EditorConfig.OutPair;
 import org.editorconfig.core.EditorConfigException;
@@ -12,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
 public class SettingsProviderComponent
 {
 	private EditorConfig editorConfig;

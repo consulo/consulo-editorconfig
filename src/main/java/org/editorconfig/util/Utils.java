@@ -1,8 +1,8 @@
-package org.editorconfig;
+package org.editorconfig.util;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.project.Project;
+import consulo.virtualFileSystem.VirtualFile;
 import org.editorconfig.core.EditorConfig.OutPair;
 import org.editorconfig.plugincomponents.EditorConfigNotifier;
 import org.editorconfig.settings.EditorConfigSettings;

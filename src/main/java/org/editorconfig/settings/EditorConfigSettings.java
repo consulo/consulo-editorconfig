@@ -1,7 +1,7 @@
 package org.editorconfig.settings;
 
-import com.intellij.psi.codeStyle.CodeStyleSettings;
-import com.intellij.psi.codeStyle.CustomCodeStyleSettings;
+import consulo.language.codeStyle.CodeStyleSettings;
+import consulo.language.codeStyle.CustomCodeStyleSettings;
 
 /**
  * @author Dennis.Ushakov
