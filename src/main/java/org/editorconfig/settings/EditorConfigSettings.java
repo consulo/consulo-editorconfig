@@ -9,7 +9,7 @@ import consulo.language.codeStyle.CustomCodeStyleSettings;
 public class EditorConfigSettings extends CustomCodeStyleSettings {
   public boolean ENABLED = true;
 
-  protected EditorConfigSettings(CodeStyleSettings container) {
+  public EditorConfigSettings(CodeStyleSettings container) {
     super("editorconfig", container);
   }
 }

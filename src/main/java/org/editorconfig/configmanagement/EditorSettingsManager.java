@@ -1,5 +1,6 @@
 package org.editorconfig.configmanagement;
 
+import consulo.codeEditor.OverrideEditorFileKeys;
 import consulo.document.Document;
 import consulo.document.FileDocumentManager;
 import consulo.document.event.FileDocumentManagerAdapter;
@@ -78,11 +79,11 @@ public class EditorSettingsManager extends FileDocumentManagerAdapter
 		final List<EditorConfig.OutPair> outPairs = settingsProvider.getOutPairs(myProject, filePath);
 		// Apply trailing spaces setting
 		final String trimTrailingWhitespace = Utils.configValueForKey(outPairs, trimTrailingWhitespaceKey);
-		applyConfigValueToUserData(file, TrailingSpacesStripper.OVERRIDE_STRIP_TRAILING_SPACES_KEY,
+		applyConfigValueToUserData(file, OverrideEditorFileKeys.OVERRIDE_STRIP_TRAILING_SPACES_KEY,
 				trimTrailingWhitespaceKey, trimTrailingWhitespace, trimMap);
 		// Apply final newline setting
 		final String insertFinalNewline = Utils.configValueForKey(outPairs, insertFinalNewlineKey);
-		applyConfigValueToUserData(file, TrailingSpacesStripper.OVERRIDE_ENSURE_NEWLINE_KEY,
+		applyConfigValueToUserData(file, OverrideEditorFileKeys.OVERRIDE_ENSURE_NEWLINE_KEY,
 				insertFinalNewlineKey, insertFinalNewline, newlineMap);
 	}
 
