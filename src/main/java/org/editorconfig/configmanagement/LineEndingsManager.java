@@ -1,6 +1,5 @@
 package org.editorconfig.configmanagement;
 
-import consulo.application.ApplicationManager;
 import consulo.document.Document;
 import consulo.document.FileDocumentManager;
 import consulo.document.event.FileDocumentManagerAdapter;
@@ -16,13 +15,14 @@ import consulo.project.ui.wm.StatusBarWidget;
 import consulo.project.ui.wm.WindowManager;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
+import jakarta.annotation.Nonnull;
 import org.editorconfig.core.EditorConfig;
 import org.editorconfig.plugincomponents.SettingsProviderComponent;
 import org.editorconfig.util.Utils;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Dennis.Ushakov
@@ -44,24 +44,34 @@ public class LineEndingsManager extends FileDocumentManagerAdapter {
   }
 
   private void updateStatusBar() {
-    ApplicationManager.getApplication().invokeLater(new Runnable() {
+    myProject.getUIAccess().give(new Runnable() {
       @Override
       public void run() {
         IdeFrame frame = WindowManager.getInstance().getIdeFrame(myProject);
-        StatusBar statusBar = frame.getStatusBar();
-        StatusBarWidget widget = statusBar != null ? statusBar.getWidget("LineSeparator") : null;
-
-        if (widget instanceof FileEditorManagerListener) {
-          FileEditorManagerEvent event = new FileEditorManagerEvent(FileEditorManager.getInstance(myProject),
-                                                                    null, null, null, null);
-          ((FileEditorManagerListener)widget).selectionChanged(event);
+        if (frame == null) {
+          return;
         }
+        
+        StatusBar statusBar = frame.getStatusBar();
+        if (statusBar == null) {
+          return;
+        }
+
+        Optional<StatusBarWidget> optional = statusBar.findWidget(widget -> "lineSeparatorWidget".equals(widget.getId()));
+
+        optional.ifPresent(widget -> {
+          if (widget instanceof FileEditorManagerListener) {
+            FileEditorManagerEvent event = new FileEditorManagerEvent(FileEditorManager.getInstance(myProject),
+                                                                      null, null, null, null);
+            ((FileEditorManagerListener)widget).selectionChanged(event);
+          }
+        });
       }
     });
   }
 
   @Override
-  public void beforeDocumentSaving(@NotNull Document document) {
+  public void beforeDocumentSaving(@Nonnull Document document) {
     VirtualFile file = FileDocumentManager.getInstance().getFile(document);
     applySettings(file);
   }

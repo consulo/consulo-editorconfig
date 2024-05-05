@@ -3,7 +3,7 @@ package org.editorconfig.plugincomponents;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
-import consulo.editor.config.EditorConfigNotification;
+import consulo.editorConfig.EditorConfigNotification;
 import consulo.ide.ServiceManager;
 import consulo.project.Project;
 import consulo.project.ProjectPropertiesComponent;
@@ -16,35 +16,29 @@ import jakarta.inject.Singleton;
 @Singleton
 @ServiceAPI(ComponentScope.APPLICATION)
 @ServiceImpl
-public class EditorConfigNotifier
-{
-	public static final String LAST_NOTIFICATION_STATUS = "editorconfig.notification";
+public class EditorConfigNotifier {
+  public static final String LAST_NOTIFICATION_STATUS = "editorconfig.notification";
 
-	public static EditorConfigNotifier getInstance()
-	{
-		return ServiceManager.getService(EditorConfigNotifier.class);
-	}
+  public static EditorConfigNotifier getInstance() {
+    return ServiceManager.getService(EditorConfigNotifier.class);
+  }
 
-	public void error(Project project, String id, String message)
-	{
-		doNotify(project, id, message, NotificationType.ERROR);
-	}
+  public void error(Project project, String id, String message) {
+    doNotify(project, id, message, NotificationType.ERROR);
+  }
 
-	protected void doNotify(Project project, String id, String message, final NotificationType type)
-	{
-		final String value = ProjectPropertiesComponent.getInstance(project).getValue("editorconfig.notification");
-		if(id.equals(value))
-		{
-			return;
-		}
+  protected void doNotify(Project project, String id, String message, final NotificationType type) {
+    final String value = ProjectPropertiesComponent.getInstance(project).getValue(LAST_NOTIFICATION_STATUS);
+    if (id.equals(value)) {
+      return;
+    }
 
-		EditorConfigNotification.GROUP.createNotification(message, type).notify(project);
+    EditorConfigNotification.GROUP.createNotification(message, type).notify(project);
 
-		ProjectPropertiesComponent.getInstance(project).setValue(LAST_NOTIFICATION_STATUS, id);
-	}
+    ProjectPropertiesComponent.getInstance(project).setValue(LAST_NOTIFICATION_STATUS, id);
+  }
 
-	public void info(Project project, String message)
-	{
-		doNotify(project, message, message, NotificationType.INFORMATION);
-	}
+  public void info(Project project, String message) {
+    doNotify(project, message, message, NotificationType.INFORMATION);
+  }
 }
