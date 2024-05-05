@@ -2,82 +2,78 @@ package org.editorconfig.settings;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.configurable.ConfigurationException;
+import consulo.disposer.Disposable;
 import consulo.language.codeStyle.CodeStyleSettings;
 import consulo.language.codeStyle.ui.setting.GeneralCodeStyleOptionsProvider;
+import consulo.localize.LocalizeValue;
+import consulo.ui.CheckBox;
+import consulo.ui.Component;
+import consulo.ui.Label;
 import consulo.ui.annotation.RequiredUIAccess;
-import consulo.ui.ex.awt.IdeBorderFactory;
-import consulo.ui.ex.awt.JBCheckBox;
-import consulo.ui.ex.awt.UIUtil;
-import consulo.ui.ex.awt.VerticalFlowLayout;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
+import consulo.ui.layout.DockLayout;
+import consulo.ui.layout.LabeledLayout;
+import consulo.ui.style.StandardColors;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dennis.Ushakov
  */
 @ExtensionImpl
-public class EditorConfigConfigurable implements GeneralCodeStyleOptionsProvider
-{
-	private JBCheckBox myEnabled;
+public class EditorConfigConfigurable implements GeneralCodeStyleOptionsProvider {
+  private CheckBox myEnabled;
 
-	@RequiredUIAccess
-	@Nullable
-	@Override
-	public JComponent createComponent()
-	{
-		myEnabled = new JBCheckBox("Enable EditorConfig support");
-		final JPanel panel = new JPanel(new VerticalFlowLayout());
-		panel.setBorder(IdeBorderFactory.createTitledBorder("EditorConfig", false));
-		panel.add(myEnabled);
-		final JLabel warning = new JLabel("EditorConfig may override the IDE code style settings");
-		warning.setFont(UIUtil.getLabelFont(UIUtil.FontSize.SMALL));
-		warning.setBorder(IdeBorderFactory.createEmptyBorder(0, 20, 0, 0));
-		panel.add(warning);
-		return panel;
-	}
+  @RequiredUIAccess
+  @Nullable
+  @Override
+  public Component createUIComponent(@Nonnull Disposable parentDisposable) {
 
-	@Override
-	public boolean isModified(CodeStyleSettings settings)
-	{
-		return myEnabled.isSelected() != settings.getCustomSettings(EditorConfigSettings.class).ENABLED;
-	}
+    myEnabled = CheckBox.create(LocalizeValue.localizeTODO("Enable EditorConfig support"));
 
-	@Override
-	public void apply(CodeStyleSettings settings)
-	{
-		settings.getCustomSettings(EditorConfigSettings.class).ENABLED = myEnabled.isSelected();
-	}
+    Label warningLabel = Label.create(LocalizeValue.localizeTODO("May override the IDE code style settings"));
+    warningLabel.setForegroundColor(StandardColors.GRAY);
 
-	@Override
-	public void reset(CodeStyleSettings settings)
-	{
-		myEnabled.setSelected(settings.getCustomSettings(EditorConfigSettings.class).ENABLED);
-	}
+    DockLayout layout = DockLayout.create();
+    layout.left(myEnabled);
+    layout.right(warningLabel);
 
-	@RequiredUIAccess
-	@Override
-	public void disposeUIResources()
-	{
-		myEnabled = null;
-	}
+    return LabeledLayout.create(LocalizeValue.localizeTODO("EditorConfig"), layout);
+  }
 
-	@RequiredUIAccess
-	@Override
-	public boolean isModified()
-	{
-		return false;
-	}
+  @Override
+  public boolean isModified(CodeStyleSettings settings) {
+    return myEnabled.getValue() != settings.getCustomSettings(EditorConfigSettings.class).ENABLED;
+  }
 
-	@RequiredUIAccess
-	@Override
-	public void apply() throws ConfigurationException
-	{
-	}
+  @Override
+  public void apply(CodeStyleSettings settings) {
+    settings.getCustomSettings(EditorConfigSettings.class).ENABLED = myEnabled.getValue();
+  }
 
-	@RequiredUIAccess
-	@Override
-	public void reset()
-	{
-	}
+  @Override
+  public void reset(CodeStyleSettings settings) {
+    myEnabled.setValue(settings.getCustomSettings(EditorConfigSettings.class).ENABLED);
+  }
+
+  @RequiredUIAccess
+  @Override
+  public void disposeUIResources() {
+    myEnabled = null;
+  }
+
+  @RequiredUIAccess
+  @Override
+  public boolean isModified() {
+    return false;
+  }
+
+  @RequiredUIAccess
+  @Override
+  public void apply() throws ConfigurationException {
+  }
+
+  @RequiredUIAccess
+  @Override
+  public void reset() {
+  }
 }
